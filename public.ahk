@@ -1,7 +1,9 @@
 ﻿:*:/do:: ;slušně pozdraví
 If(A_hour < 3)
 	Send, Dobrý pozdní večer,`n`n
-else if (A_hour >=3 && A_Hour < 11.5)
+else if (A_hour >=3 && A_Hour < 9)
+	Send, Dobré ráno,`n`n
+else if (A_hour >=9 && A_Hour < 11.5)
 	Send, Dobré dopoledne,`n`n
 else if (A_hour >=11.5 && A_Hour < 12.5)
 	Send, Dobré poledne,`n`n
