@@ -17,24 +17,15 @@ return
 	
 ^!e::Run C:\Program Files (x86)\Evernote\Evernote\Evernote.exe /NewNote ;otevře novou poznámku v Evernote
 
+Insert::Send, {Media_Play_Pause}
+
 ^!m:: ;pauzne přehrávač na tři minuty
 Send, {Media_Play_Pause}
 Sleep, 180000
 Send, {Media_Play_Pause}
 return
 
-^+v::                            ; vloží ze schránky text bez formátování (zdroj: http://www.autohotkey.com/board/topic/32037-keyboard-macro-question/)
-   Clip0 = %ClipBoardAll%
-   ClipBoard = %ClipBoard%       
-   Send ^v                       
-   Sleep 2                      
-   ClipBoard = %Clip0%           
-   VarSetCapacity(Clip0, 0)      
-Return
-
-^!g::Run www.gmail.com
-
-^!t::Run www.trello.com
+^!t::Run https://trello.com/b/CxQQsVLu/to-do
 
 ^!l::Run www.toggl.com
 
@@ -42,13 +33,13 @@ Return
 
 ^!f::Run www.facebook.com
 
-^!d::Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe "chrome-extension://hbdpomandigafcibbmofojjchbcdagbl/web/templates/default.html"
-
 f4 & SC126::return ;vypne klávesu f4
 
 f6 & SC126::return
 
 f7 & SC126::return
+
+RWin::#Tab
 
 #w::Send !{F4}
 
@@ -58,11 +49,17 @@ f7 & SC126::return
 
 :*:...::…
 
-::--::—
+::--::–
 
 :*:"_::“
 
 :*:_"::„
+
+:*:|"::“
+
+:*:"|::”
+
+:*:''::’
 
 :*:/mk::Michal Kašpárek
 
@@ -74,19 +71,15 @@ f7 & SC126::return
 
 :*:/1/2::½
 
-:*:/stupeň::°
-
-:*:/stupen::°
-
-:*:/stupnu::°
-
-:*:/stupňů::°
+:*:/stup::°
 
 :*:/promile::‰
 
 :*:/apostrof::’
 
 :*:/palce::"
+
+:*:Roszke::Röszke
 
 :*:/x::×
 
@@ -97,4 +90,21 @@ f7 & SC126::return
 :*:/datum::  
 FormatTime, CurrentDateTime,, d. M. yyyy  
 SendInput %CurrentDateTime%
-return
+Return
+
+^+x::
+oCB := ClipboardAll  ; save clipboard contents
+Send, ^c
+ClipWait,1
+SendInput [%ClipBoard%](http://%ClipBoard%)
+ClipBoard := oCB         ; return original Clipboard contents
+Return
+
+^+v::                            ; vloží ze schránky text bez formátování (zdroj: http://www.autohotkey.com/board/topic/32037-keyboard-macro-question/)
+   Clip0 = %ClipBoardAll%
+   ClipBoard = %ClipBoard%       
+   Send ^v                       
+   Sleep 2                      
+   ClipBoard = %Clip0%           
+   VarSetCapacity(Clip0, 0)      
+Return
