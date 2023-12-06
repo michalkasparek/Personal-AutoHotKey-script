@@ -1,4 +1,4 @@
-﻿:*:/do:: ;slušně pozdraví
+:*:/do:: ;slušně pozdraví
 If(A_hour < 3)
 	Send, Dobrý pozdní večer,`n`n
 else if (A_hour >=3 && A_Hour < 9)
@@ -14,32 +14,16 @@ else if (A_hour >=17.5 && A_Hour < 19)
 	else
 Send, Dobrý večer,`n`n
 return
-	
-^!e::Run C:\Program Files (x86)\Evernote\Evernote\Evernote.exe /NewNote ;otevře novou poznámku v Evernote
 
-Insert::Send, {Media_Play_Pause}
+^!g::Run https://mail.google.com/mail/u/0/#inbox
 
-^!m:: ;pauzne přehrávač na tři minuty
-Send, {Media_Play_Pause}
-Sleep, 180000
-Send, {Media_Play_Pause}
-return
+^!d::Run https://docs.google.com/document/u/0/
 
-^!t::Run https://trello.com/b/CxQQsVLu/to-do
+^!s::Run https://docs.google.com/spreadsheets/u/0/
+
+^!c::Run https://calendar.google.com/calendar/u/0/r
 
 ^!l::Run www.toggl.com
-
-^!i::Run http://jizdnirady.idnes.cz/brno/spojeni/
-
-^!f::Run www.facebook.com
-
-f4 & SC126::return ;vypne klávesu f4
-
-f6 & SC126::return
-
-f7 & SC126::return
-
-RWin::#Tab
 
 #w::Send !{F4}
 
@@ -49,7 +33,9 @@ RWin::#Tab
 
 :*:...::…
 
-::--::–
+:*: -->:: →
+
+:: --:: –
 
 :*:"_::“
 
@@ -65,8 +51,6 @@ RWin::#Tab
 
 :*:/euro::€
 
-:*:/c::©
-
 :*:/x::×
 
 :*:/1/2::½
@@ -77,34 +61,25 @@ RWin::#Tab
 
 :*:/apostrof::’
 
-:*:/palce::"
-
-:*:Roszke::Röszke
-
 :*:/x::×
-
-:*:-->::→
-
-:*:/via::ᔥ
 
 :*:/datum::  
 FormatTime, CurrentDateTime,, d. M. yyyy  
 SendInput %CurrentDateTime%
 Return
 
-^+x::
-oCB := ClipboardAll  ; save clipboard contents
-Send, ^c
-ClipWait,1
-SendInput [%ClipBoard%](http://%ClipBoard%)
-ClipBoard := oCB         ; return original Clipboard contents
+:*:/mutad::  
+FormatTime, CurrentDateTime,, yyyy-MM-dd
+SendInput %CurrentDateTime%
 Return
 
-^+v::                            ; vloží ze schránky text bez formátování (zdroj: http://www.autohotkey.com/board/topic/32037-keyboard-macro-question/)
-   Clip0 = %ClipBoardAll%
-   ClipBoard = %ClipBoard%       
-   Send ^v                       
-   Sleep 2                      
-   ClipBoard = %Clip0%           
-   VarSetCapacity(Clip0, 0)      
-Return
+^!u::
+    NowUTC := A_NowUTC
+	NowUTC -= 19700101000000, S
+	Send, %NowUTC%
+return
+
+PrintScreen::AppsKey
+RControl & PrintScreen::PrintScreen
+
+:*:/pandoc::pandoc.exe -f markdown -t docx
